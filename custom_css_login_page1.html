@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveCode Export</title>
+    
+    <!-- ============================================ -->
+    <!-- CSS CODE (from the CSS editor)               -->
+    <!-- ============================================ -->
+    <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+body{
+    height: 200vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, #4f4635, #9333ea, #ec4899);
+    padding: 20px;
+    overflow: hidden;
+    zoom: 0.5;
+}
+.form-container {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 25px;
+    padding: 40px 35px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.25);
+    color: #fff;
+    z-index: 1;
+    animation: fadeIn 1s ease;
+}
+
+.form-container h2 {
+    text-align: center;
+    margin-bottom: 10px;
+    font-size: 34px;
+    font-weight: 700;
+}
+
+.form-container p {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #f3f4f6;
+    font-size: 14px;
+}
+
+.input-box {
+    position: relative;
+    margin-bottom: 22px;
+}
+
+.input-box input {
+    width: 100%;
+    padding: 16px, 18px;
+    border: none;
+    outline: none;border-radius: 14px;
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    font-size: 15px;
+    transition: 0.3s;
+    
+}
+
+.input-box input::placeholder {
+    color: #e5e7eb;
+
+}
+
+.input-box input:focus {
+    background: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
+    transform: scale(1.02);
+    
+}
+
+.register-btn {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    outline: none;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #ff6ec4, #7873f5);
+    color: #fff;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.4s;
+    letter-spacing: 1px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+
+.register-btn:hover {
+    transform:translateY(-5px);
+    box-shadow: 0 15px 30px rgba(255, 110, 196, 0.4);
+}
+
+.login-text {
+    text-align: center;
+    margin-top: 22px;
+    font-size: 14px;
+    color: #f9fafb;
+}
+
+.login-text a{
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.login-text a:hover {
+    text-decoration: underline;
+    
+}
+
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+    </style>
+    <!-- ============================================ -->
+    
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- HTML CODE (from the HTML editor)             -->
+    <!-- ============================================ -->
+<div class="form-container">
+  <h2>Create Account</h2>
+  <p>Join us Today and start your journey</p>
+  
+  <form>
+    <div class="input-box">
+      <input type="text" 
+             placeholder="Full Name"
+             required>
+    </div>
+    <div class="input-box">
+      <input type="email"
+             placeholder="Email Address"
+             required>
+    </div>
+    <div class="input-box">
+      <input type="password"
+             placeholder="Password"
+             required>
+    </div>
+    <div class="input-box">
+      <input type="password"
+             placeholder="Confirm Password"
+             required>
+    </div>
+    <button type="submit"
+            class="register-btn">
+      Register Now
+    </button>
+  </form>
+  
+  <div class="login-text">
+    Already Have an Account?
+    <a href="#">Login</a>
+  </div>
+  
+</div>
+    <!-- ============================================ -->
+    
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT CODE (from the JS editor)         -->
+    <!-- ============================================ -->
+    <script>
+
+    </script>
+    <!-- ============================================ -->
+    
+</body>
+</html>

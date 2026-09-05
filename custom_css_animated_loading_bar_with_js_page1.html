@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LiveCode Export</title>
+    
+    <!-- ============================================ -->
+    <!-- CSS CODE (from the CSS editor)               -->
+    <!-- ============================================ -->
+    <style>
+@property --num {
+    syntax: "<integer>";
+    initial-value: 0;
+    inherits: false;
+}
+
+
+body {
+    background: linear-gradient(to bottom right, #14151c, black, #080b1f);
+    height: 100%;
+    background-size: 100%;
+    color: #ededed;
+    overflow: hidden;
+}
+
+.flex { display: flex; }
+.container {
+    display: flex;
+    height: 100vh;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+
+#loader {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    margin-top: -90px;
+    animation: opcty 1s ease-in-out;
+}
+
+#loader .loading-text {
+    font-family: "Orbitron";
+    letter-spacing: 0.3rem;
+    margin-bottom: -5px;
+}
+
+.dot {
+    display: inline-block;
+    font-size: 100px;
+}
+
+.dot:nth-child(1) {
+    animation: dots .5s infinite alternate linear;
+    animation-fill-mode: forwards;
+}
+
+.dot:nth-child(2) {
+    animation: dots 1s infinite alternate linear;
+    animation-fill-mode: forwards;
+}
+.dot:nth-child(3) {
+    animation: dots 1.5s infinite alternate linear;
+    animation-fill-mode: forwards;
+}
+
+#loader .loading-number {
+    counter-reset: num-var(--num);
+    margin-left: auto;
+    transition: -num 5s;
+    animation: counting 13s ease-in-out;
+    font-family: "Orbitron";
+    animation-fill-mode: forwards;
+    margin-bottom: -145px;
+    line-height: 186px;
+}
+
+#loader .loading-number::before {
+    font-family: "Orbitron";
+    content: counter(num);
+}
+
+#loading-bar-border {
+    display: flex;
+    align-items: center;
+    padding: 3px;
+    border-radius: 5px;
+    border: 2px solid #99e7ef;
+}
+
+#loading-bar-border .loading-bar {
+    height: 0.6rem;
+    margin: 1px 0px;
+    border-radius: 3px;
+    background: linear-gradient(to bottom right, cyan, lightblue);
+    animation: charging 13s ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes dots {
+    from {
+        color: cyan;
+        transform: translate(0, -100%);
+    }
+    to {
+        color: white;
+        transform: translate(0, 0);
+    }
+}
+
+@keyframes opcty {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
+}
+
+@keyframes counting {
+    0% { --num: 0; }
+    60% { --num: 66; }
+    100% { --num: 100; }
+}
+
+@keyframes charging {
+    0% { width: 0%; }
+    60% { width: 66%; }
+    100% { width: 100%; }
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg);}
+}
+    </style>
+    <!-- ============================================ -->
+    
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- HTML CODE (from the HTML editor)             -->
+    <!-- ============================================ -->
+<div class="container">
+    <div id="loader">
+        <div id="title" class="flex">
+            <p class="loading-text">LOADING 
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+                <span class="dot">.</span>
+            </p>
+            <p class="loading-number">%</p>
+        </div>
+        <div id="loading-bar-border">
+            <div class="loading-bar"></div>
+        </div>
+    </div>
+</div>
+    <!-- ============================================ -->
+    
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT CODE (from the JS editor)         -->
+    <!-- ============================================ -->
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dots = document.querySelectorAll('.dot');
+    const loadingBar = document.querySelector('.loading-bar');
+    loadingBar.addEventListener
+        ('animationend', () => {
+            dots.forEach(dot => {
+                dot.style.animation = 'none';
+            });
+        });
+    });
+    </script>
+    <!-- ============================================ -->
+    
+</body>
+</html>
