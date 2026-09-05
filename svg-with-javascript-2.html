@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <style>
+            :root {
+            --_white: #fff;
+            --_gray: #212124;
+            --c-txt: var(--_gray);
+            --c-bg: var(--_white);
+            @media (prefers-color-scheme: dark) {
+                    --c-txt: var(--_white);
+                    --c-bg: var(--_gray);
+            }
+        }
+
+            body {
+                color: var(--c-txt);
+                background: var(--c-bg);
+                padding: 10vmin;
+            }
+
+            figure {
+                text-align: center;
+            }
+
+            figcaption {
+                margin-top: 0.6em;
+                font-style: italic;
+            }
+
+            svg {
+                box-shadow: 0 0 0.2em 1em 0 color-mix(in srgb, var(--c-txt) 10%, var(--c-bg));
+            }
+        </style>
+
+        <script type="text/javascript">
+           function callSVG() {
+             // vars
+
+               const container = document.querySelector("[data-svg-container]");
+               const svgWidth = "50vmin";
+               const lineDocWidth = 421;
+               const lineDocHeight = 391;
+               const lineStroke = "currentColor";
+               const lineStrokeWidth = 5;
+               const horizontalLineStart = 0;
+               const horizontalLineEnd = lineDocWidth;
+               const horizontalLineY = lineDocHeight / 2;
+               const verticalLineStart = 0;
+               const verticalLineEnd = lineDocHeight;
+               const verticalLineX = lineDocWidth / 2;
+            
+               const title = 
+               "Four Rectangles of Different Qualities Placed in each quadrant";
+
+               // create SVG as proper DOM element
+               const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+               svg.setAttribute("width", svgWidth);
+               svg.setAttribute("viewBox", `0 0 ${lineDocWidth} ${lineDocHeight}`);
+               svg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+               svg.setAttribute("role", "img");
+
+               // append innerHTML as string
+               svg.innerHTML = `
+                    <title>${title}</title>
+                    <line
+                        x1=${horizontalLineStart}
+                        x2=${horizontalLineEnd}
+                        y1=${horizontalLineY}
+                        y2=${horizontalLineY}
+                        stroke=${lineStroke}
+                        stroke-width=${lineStrokeWidth}
+                    />        
+                    <line
+                        x1=${verticalLineX}
+                        x2=${verticalLineX}
+                        y1=${verticalLineStart}
+                        y2=${verticalLineEnd}
+                        stroke=${lineStroke}
+                        stroke-width=${lineStrokeWidth}
+                    />                 
+                `;
+
+               container.appendChild(svg);
+           }
+        </script>
+    </head>
+    <body onload="callSVG();">
+        <figure>
+            <div data-svg-container></div>
+            <figcaption>Divided SVG into quadrant by two lines.</figcaption>
+        </figure>
+
+    </body>
+</html>
