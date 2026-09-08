@@ -1,0 +1,435 @@
+<html>
+    <head>
+        <style>
+            
+            @layer settings, base, svg, example;
+
+            @layer example {
+                .hide-controls {
+                    .control {
+                        display: none;
+                    }
+                    .curve {
+                        marker-start: none;
+                        marker-end: none;
+                    }
+                }
+            }
+
+            @layer svg {
+                figcaption {
+                    margin-top: 0.6em;
+                    font-style: italic;
+                }
+                svg {
+                    max-width: calc(100vmin - var(--s-body-bezel) * 2);
+                    box-shadow: 0 0.2em 1em 0 color-mix(in sRGB, var(--c-txt) 10%, var(--c-bg));
+                }
+            }
+
+            @layer settings {
+                :root {
+                    --s-body-bezel: 1em;
+                    color-scheme: light dark;
+
+                     --_white: #fff;
+                     --_gray: #111112;
+                     --_red: light-dark(#e60000, #ff4242);
+                     --_aqua: light-dark(#00856f, #09ecc6);
+                     --_blue: light-dark(#026fe3, #3998fe);
+                     --_purple: light-dark(#6d00c7, #e733ff);
+                     --_green: light-dark(#008009, #4dec09);
+                     --c-txt: light-dark(var(--_gray), var(--_white));
+                     --c-bg: light-dark( var(--_white), var(--_gray));
+                }
+
+                html,
+                body {
+
+                    margin: 0;
+                    height: 100dvh;
+                    box-sizing: border-box;
+                }
+                figure {
+                    text-align: center;
+                    margin: 0;
+                }
+            }
+
+            @layer base {
+                body {
+                    color: var(--c-txt);
+                    background: var(--c-bg);
+                    padding: var(--s-body-bezel);
+                    align-content: center;
+                }
+            }
+        </style>
+
+        <script type="text/javascript">
+           function callSVGQBezierAnim() {
+                // vars
+
+                const doc = { w: 120, h: 120 };
+                const animationDuration = "20s";
+                const gridStepSize = 10;
+                const curveStrokeWidth = 1.5;
+                const color = "currentColor";
+                const pathFill = "url(#crosshatch)";
+                const pathStroke = "url(gradient)";
+
+                const psHorizontal = {
+                    p0: { x: 10, y: 20 },
+                    p1: { x: 110, y: 60 }
+                };
+                const psDiagonal = {
+                    p0: { x: 10, y: 10 },
+                    p1: { x: 110, y: 110 }
+                };
+                const frames = [
+                    {
+                        p0: psHorizontal.p0,
+                        p1: psHorizontal.p1,
+                        c0: { x: 10, y: 80 }
+                    },
+                    {
+                        p0: psHorizontal.p0,
+                        p1: psHorizontal.p1,
+                        c0: { x: 60, y: 110 }
+                    },
+                    {
+                        p0: psHorizontal.p0,
+                        p1: psHorizontal.p1,
+                        c0: { x: 110, y: 110 }
+                    },
+                    {
+                        p0: psHorizontal.p0,
+                        p1: psHorizontal.p1,
+                        c0: { x: 110, y: 60 }
+                    },
+                    {
+                        p0: psHorizontal.p0,
+                        p1: psHorizontal.p1,
+                        c0: { x: 110, y: 10 }
+                    },
+                    {
+                        p0: psHorizontal.p0,
+                        p1: psHorizontal.p1,
+                        c0: { x: 60, y: 10 }
+                    },
+                    {
+                        p0: psHorizontal.p0,
+                        p1: psHorizontal.p1,
+                        c0: { x: 10, y: 80 }
+                    },
+                    {
+                        p0: psDiagonal.p0,
+                        p1: psDiagonal.p1,
+                        c0: { x: 10, y: 80 }
+                    },
+                    {
+                        p0: psDiagonal.p0,
+                        p1: psDiagonal.p1,
+                        c0: { x: 30, y: 10 }
+                    },
+                    {
+                        p0: psDiagonal.p0,
+                        p1: { x: 50, y: 40 },
+                        c0: { x: 130, y: 110 }
+                    }
+                ];
+                frames.push(frames[0]);
+
+                const makeQuadraticCurvePathDef = (p0, c0, p1) => {
+                    return `M${p0.x} ${p0.y} Q${c0.x} ${c0.y} ${p1.x} ${p1.y}`;
+                };
+
+                const makeHandlePathDef = (p0, c, p1) => {
+                    return `M${p0.x} ${p0.y} L${c.x} ${c.y} L${p1.x} ${p1.y}`;
+                };
+
+                const drawSVGContent = () => {
+                    const els = [];
+
+                    const curve = makeSVGEl("path", {
+                        class: "curve",
+                        d: makeQuadraticCurvePathDef(frames[0].p0, frames[0].c0, frames[0].p1),
+                        fill: pathFill,
+                        stroke: pathStroke,
+                        "stroke-width": curveStrokeWidth,
+                        "marker-start": "url(#point)",
+                        "marker-end": "url(#point)"
+                    });
+
+                    const curveAnimate = makeSVGEl("animate", {
+                        attributeName: "d",
+                        dur: animationDuration,
+                        repeatCount: "indefinite",
+                        values: frames.map((frame) => makeQuadraticCurvePathDef(frame.p0, frame.c0, frame.p1)).join(";")
+                    });
+
+                    curve.appendChild(curveAnimate);
+                    els.push(curve);
+                    const controlGroup = makeSVGEl("g", { class: "control" });
+
+                    const controlPointConnect = makeSVGEl("path", {
+                        class: "control",
+                        d: makeHandlePathDef(frames[0].p0, frames[0].c0, frames[0].p1),
+                        fill: "none",
+                        stroke: "var(--_red)",
+                        "stroke-width": curveStrokeWidth * 0.3,
+                        "marker-mid": "url(#handle)"
+                    });
+
+                    const controlPointConnectAnimate = makeSVGEl("animate", {
+                        attributeName: "d",
+                        dur: animationDuration,
+                        repeatCount: "indefinite",
+                        values: frames.map((frame) => makeHandlePathDef(frame.p0, frame.c0, frame.p1)).join(";")
+                    });
+
+                    controlPointConnect.appendChild(controlPointConnectAnimate);
+                    controlGroup.appendChild(controlPointConnect);
+                    els.push(controlGroup);
+                    return els;
+                };
+
+                const drawDefs = () => {
+                    const defs = [];
+                    const pointMarker = makeSVGEl("marker", {
+                        id: "point",
+                        viewBox: "0 0 10 10",
+                        refX: 5,
+                        refY: 5,
+                        markerWidth: 2,
+                        markerHeight: 2,
+                        style: "overflow:visible;"
+                    });
+
+                    const pointMarkerRect = makeSVGEl("rect", {
+                        x: 0,
+                        y: 0,
+                        width: 10,
+                        height: 10,
+                        fill: "var(--c-bg)",
+                        stroke: "currentColor",
+                        "stroke-width": 2
+                    });
+
+                    pointMarker.appendChild(pointMarkerRect);
+                    defs.push(pointMarker);
+
+                    const handleMarker = makeSVGEl("marker", {
+                        id: "handle",
+                        viewBox: "0 0 10 10",
+                        refX: 5,
+                        refY: 5,
+                        markerWidth: 15,
+                        markerHeight: 15
+                    });
+
+                    const handleMarkerCircle = makeSVGEl("circle", {
+                        cx: 5,
+                        cy: 5,
+                        r: 2,
+                        fill: "var(--c-handle, currentColor)"
+                    });
+
+                    handleMarker.appendChild(handleMarkerCircle);
+                    defs.push(handleMarker);
+
+                    const gradient = makeSVGEl("linearGradient", {
+                        id: "gradient",
+                        x1: 0,
+                        x2: 1,
+                        y1: 0,
+                        y2: 1
+                    });
+
+                    const stop1 = makeSVGEl("stop", {
+                        offset: "0%",
+                        "stop-color": "var(--_aqua)"
+                    });
+
+                    const stop2 = makeSVGEl("stop", {
+                        offset: "100%",
+                        "stop-color": "var(--_blue)"
+                    });
+                    gradient.appendChild(stop1);
+                    gradient.appendChild(stop2);
+                    defs.push(gradient);
+
+                    const crosshatch = makeSVGEl("pattern", {
+                        id: "crosshatch",
+                        width: 0.8,
+                        height: 0.8,
+                        patternUnits: "userSpaceOnUse",
+                        patternTransform: "rotate(50)"
+                    });
+
+                    const line = makeSVGEl("line", {
+                        x1: 0,
+                        y1: 0,
+                        x2: 0,
+                        y2: 4,
+                        stroke: "currentColor",
+                        "stroke-width": 0.3
+                    });
+
+                    crosshatch.appendChild(line);
+                    defs.push(crosshatch);
+
+                    return defs;
+                };
+
+                // SVG Example Boiler plate stuff
+
+                const gridBuffer = { x: 10, y: 5 };
+                const width = doc.w + (gridBuffer?.x || 0);
+                const height = doc.h + (gridBuffer?.y || 0);
+                const animationControlBtn = document.querySelector("[data-play-pause]");
+                const animationResetBtn = document.querySelector("[data-reset]")
+                const container = document.querySelector("[data-svg-container]");
+                const renderHandleCheckBox = document.getElementById("render-handle");
+                const gridStrokeWidth = 0.2;
+                const cutoffCorrection = (gridStrokeWidth / 2) * -1;
+                const gridColor = "currentColor";
+                const svgDefs = drawDefs();
+                const svgContent = drawSVGContent();
+
+                function makeSVG(title, svgContentChildrenArray, svgDefsChildrenArray) {
+                    const svg = makeSVGEl("svg", {
+                        viewBox: `${cutoffCorrection} ${cutoffCorrection} ${width} ${height}`,
+                        xmlns: "http://www.w3.org/2000/svg",
+                        role: "img"
+                    });
+
+                    const titleEl = makeSVGEl("title");
+                    titleEl.textContent = title;
+                    svg.appendChild(titleEl);
+
+                    const defs = makeSVGEl("defs");
+                    svgDefsChildrenArray.forEach((def) => defs.appendChild(def));
+                    svg.appendChild(defs);
+
+                    const grid = drawGrid();
+                    svg.appendChild(grid);
+
+                    svgContentChildrenArray.forEach((child) => svg.appendChild(child));
+                    return svg;
+                }
+
+                const svg = makeSVG(title, svgContent, svgDefs);
+                container.appendChild(svg);
+
+                // pause animations by default
+                svg.pauseAnimations();
+
+                // add Eventlistener to play / pause button
+                animationControlBtn.addEventListener("click", () => {
+                    if (svg.animationsPaused()) {
+                        svg.unpauseAnimations();
+                        animationControlBtn.innerText = "Pause";
+                    } else {
+                        svg.pauseAnimations();
+                        animationControlBtn.innerText = "Play";
+                    }
+                });
+
+                // add event listener to reset button
+                animationResetBtn.addEventListener("click", () => {
+                    svg.setCurrentTime(0);
+                    svg.pauseAnimations();
+                    animationControlBtn.innerText = "Play";
+                });
+
+                const hideControlsClass = "hide-controls";
+
+                if (renderHandleCheckBox.checked) {
+                    container.classList.remove(hideControlsClass);
+                } else {
+                    container.classList.add(hideControlsClass);
+                }
+                renderHandleCheckBox.addEventListener("change", () => {
+                    container.classList.toggle(hideControlsClass);
+                });
+
+                function drawGrid(sW = gridStrokeWidth, c = gridColor, labelStyle = "font-size:5px;font-family:monospace") {
+                    const totalHorizontalLines = Math.floor(doc.h / gridStepSize);
+                    const totalVeriticalLines = Math.floor(doc.w / gridStepSize);
+
+                    const g = makeSVGEl("g", {
+                        class: "grid",
+                        style: `opacity: 0.8;`
+                    });
+
+                    const yAxisLabels = makeSVGEl("g", {
+                        class: "y-axis-labels",
+                        style: labelStyle
+                    });
+                    const xAxisLabels = makeSVGEl("g", {
+                        class: "x-axis-labels",
+                        style: labelStyle
+                    });
+                    let pathDefinitionString = "";
+                    for (let i = 0; i < totalHorizontalLines; i++) {
+                        pathDefinitionString += `M0 ${i * gridStepSize} H${width}`;
+                        const labelEl = makeSVGEl("text", {
+                            x: width,
+                            y: i * gridStepSize,
+                            dy: "1em",
+                            dx: "-0.4em",
+                            fill: c,
+                            "text-anchor": "end"
+                        });
+                        labelEl.textContent = i === 0 ? "y" : i * gridStepSize;
+                        yAxisLabels.appendChild(labelEl);
+                    }
+
+                    for (let i = 0; i < totalVeriticalLines; i++) {
+                        pathDefinitionString += `M${i * gridStepSize} 0 V${height}`;
+                        const labelEl = makeSVGEl("text", {
+                            x: i * gridStepSize,
+                            y: height,
+                            dy: "-0.4em",
+                            dx: "0.2em",
+                            fill: c
+                        });
+                        labelEl.textContent = i === 0 ? "x" : i * gridStepSize;
+                        xAxisLabels.appendChild(labelEl);
+                    }
+
+                    const path = makeSVGEl("path", {
+                        d: pathDefinitionString,
+                        stroke: c,
+                        "stroke-width": sW,
+                        fill: "none"
+                    });
+                    g.appendChild(path)
+                    g.appendChild(yAxisLabels);
+                    g.appendChild(xAxisLabels);
+                    return g;
+                }
+
+                function makeSVGEl(type, attrs) {
+                    const el = document.createElementNS("http://www.w3.org/2000/svg", type);
+                    for (let key in attrs) {
+                        el.setAttribute(key, attrs[key]);
+                    }
+                    return el;
+                }
+            }    
+        </script>
+    </head>
+    <body onload="callSVGQBezierAnim();">
+        <button data-play-pause>Play</button>
+        <button data-reset>Reset Animation</button>
+        <input type="checkbox" name="render-handle" id="render-handle" checked />
+        <label for="render-handle">Render Handle</label>
+        <figure>
+            <div data-svg-container></div>
+            <figcaption>Qudratic Bezier Animation</figcaption>
+        </figure>
+
+    </body>
+</html>
