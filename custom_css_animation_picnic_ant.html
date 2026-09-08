@@ -1,0 +1,94 @@
+<html>
+    <head>
+        <style>
+            
+            @property --a1 {
+                syntax: '<angle>';
+                initial-value: 180deg;
+                inherits: true;
+            }
+
+            @property --a2 {
+                syntax: '<angle>';
+                initial-value: 180deg;
+                inherits: true;
+            }
+
+            @keyframes moveLeg1{
+                0%, 100% {
+                    --a1: -12deg;
+                }
+                50% {
+                    --a1: 10deg;
+                }
+            }
+
+            @keyframes moveLeg2{
+                0%, 100% {
+                    --a2: -8deg;
+                }
+                50% {
+                    --a2: 10deg;
+               }
+            }
+
+            @keyframes moveAnt {
+                0% { translate: -50% 100vh; }
+                100% { translate: -50% -100vh; }
+            }
+
+            .picnic {
+                --c:#d003;
+                position: absolute;
+                
+                top:0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                overflow: hidden;
+                background:  
+                repeating-linear-gradient(90deg,#0000 0 75px, var(--c) 0 150px),
+                repeating-linear-gradient(0deg,#0000 0 75px, var(--c) 0 150px),
+                #f002;
+            
+             &::before {
+                content: "";
+                animation: 
+                        moveAnt 6s infinite,
+                        moveLeg1 0.9s infinite,
+                        moveLeg2 0.8s infinite;
+                position: absolute;
+                width: 40px;
+                height: 70px;                
+                top: 50%;
+                left: 50%;
+                background:
+                    /* leg */
+                    linear-gradient(var(--a1), #0000 46%, #000 0 54%, #0000 0) 0 42% / 100% 50%,
+                    linear-gradient(calc(var(--a2) * -1.1 + 2deg), #0000 46%, #000 0 54%, #0000 0) 0 23% / 61% 55%,
+                    linear-gradient(calc(-1 * var(--a1) * 1.3), #0000 46%, #000 0 54%, #0000 0) 100% 23% / 61% 55%,
+                    linear-gradient(calc(var(--a1) * -1.4 + 5deg), #0000 46%, #000 0 54%, #0000 0) 100% 57% / 61% 55%,
+                    linear-gradient(calc(-1 * var(--a2) * 1.2), #0000 46%, #000 0 54%, #0000 0) 0 57% / 61% 55%,
+                    /* body */
+                    radial-gradient(farthest-side at 100% 50%, #000 calc(100% - 1px), #0000) 40% 0 / 5px 10px,
+                    radial-gradient(farthest-side at 0% 50%, #000 calc(100% - 1px), #0000) 60% 0 / 5px 10px, 
+                    radial-gradient(26% 13% at 50% 22%, #000 calc(100% - 1px), #0000),
+                    radial-gradient(circle at 50% 39%, #000 calc(10% - 1px), #0000 10%),
+                    radial-gradient(circle at 50% 49%, #000 calc(12% - 1px), #0000 12%),
+                    radial-gradient(26% 23% at 50% 75%, #000 calc(100% - 1px), #0000)
+                    #0703;
+                background-repeat: no-repeat;
+             }
+            }
+            
+        </style>
+
+        <script type="text/javascript">
+           
+        </script>
+    </head>
+    <body>
+        <div class="picnic"></div>
+
+    </body>
+</html>
