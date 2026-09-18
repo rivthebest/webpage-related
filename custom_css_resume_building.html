@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" >
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #1769aa;
+            --primary-dark: #0e4f82;
+            --text: #20262d;
+            --muted: #66717d;
+            --light: #f4f7fa;
+            --border: #dfe5eb;
+            --white: #ffffff;
+        }
+
+        body {
+            background:#efedf2;
+            font-family: "Inter", Arial, sans-serif;
+            color: var(--text);
+            padding: 35px 15px;
+        }
+
+        .resume {
+            width: 210mm;
+            min-height: 297mm;
+            max-width: 100%;
+            margin: auto;
+            background: var(--white);
+            box-shadow: 0 15px 45px rgba(0, 0, 0 0.12);
+            position: relative;
+        }
+
+        .header {
+            padding: 34px 42px 28px;
+            border-bottom: 4px solid var(--primary);
+            position: relative;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .name {
+            font-size: 34px;
+            font-weight: 800;
+            letter-spacing: -1.5px;
+            color: #17212b;
+        }
+
+        .role{
+            margin-top: 5px;
+            color: var(--primary);
+            font-size: 15px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+        }
+        .contact {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9px 20px;
+            margin-top: 18px;
+            font-size: 10.5px;
+            color: var(--muted);
+        }
+
+        .contact span {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .contact span i {
+            font-size: 15px;
+            height: 15px;
+            line-height: 15px;
+        }
+
+        .content {
+            display: grid;
+            grid-template-columns: 64% 36%;
+        }
+
+        .main {
+            padding: 28px 34px 40px  42px;
+        }
+
+        .sidebar {
+            background: #f5f8fa;
+            border-left: 1px solid var(--border);
+            padding: 28px 28px 40px;
+        }
+
+        .section {
+            margin-bottom: 27px;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            color: #18232d;
+            margin-bottom: 15px;
+        }
+
+        .section-title::before {
+            content: "";
+            width: 25px;
+            height: 3px;
+            background: var(--primary);
+            border-radius: 5px;
+        }
+
+        .summary {
+            font-size: 11.2px;
+            line-height: 1.8;
+            color: #515c67;
+        }
+
+        .experience {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid #dce8f1;
+        }
+
+        .job {
+            position: relative;
+            margin-bottom: 23px;
+
+        }
+
+        .job::before {
+            content: "";
+            position: absolute;
+            left: -28px;
+            top: 0px;
+            width: 10px;
+            height: 10px;
+            background: var(--white);
+            border: 3px  solid var(--primary);
+            border-radius: 50%;
+        }
+        .job:last-child{margin-bottom: 0px;}
+        .job-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .job-title {
+            font-size: 12.5px;
+            font-weight: 800;
+        }
+
+        .company {
+            color: var(--primary);
+            font-size: 10.5px;
+            font-weight: 600;
+            margin-top: 3px;
+        }
+
+        .date {
+            white-space: nowrap;
+            color: var(--primary);
+            background: #edf6fc;
+            padding: 5px 8px;
+            height: fit-content;
+            border-radius: 4px;
+            font-size: 9px;
+            font-weight: 700;
+        }
+
+        .job ul {
+            margin: 9px 0 0 15px;
+        }
+        .job li {
+            margin-bottom: 5px;
+            font-size: 10.3px;
+            line-height: 1.6;
+            color: #58636e;
+        }
+
+        .projects {
+            display: grid;
+            gap: 11px;
+        }
+
+        .project {
+            padding: 13px;
+            border: 1 px solid var(--border);
+            border-radius: 7px;
+            background: var(--white);
+            transition: 0.2s;
+        }
+        .project:hover {
+            border-color: #a9cbe2;
+            transform: translateY(-2px);
+        }
+
+        .project-top {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+        }
+        .project h4 {
+            font-size: 11.5px;
+        }
+        .project-type {
+            color: var(--primary);
+            font-size: 8px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+        .project p {
+            margin-top: 6px;
+            font-size: 9.7px;
+            line-height: 1.6;
+            color: var(--muted);
+        }
+        .tech {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 8px;
+        }
+        .tech span {
+            background: #edf5fb;
+            color: #24638d;
+            padding: 4px 7px;
+            border-radius: 4px;
+            font-size: 8px;
+            font-weight: 600;
+        }
+        .education-item {
+            margin-bottom: 15px;
+        }
+        .degree {
+            font-size: 11.5px;
+            font-weight: 700;
+        }
+        .school {
+            margin-top: 3px;
+            font-size: 10px;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .edu-date {
+            margin-top: 3px;
+            font-size: 9px;
+            color: var(--muted);
+        }
+        .sidebar-section {
+            margin-bottom: 28px;
+        }
+        .sidebar-title {
+            font-size: 11px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.3px;
+            color: #1d2a35;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #dce6ed;
+            margin-bottom: 13px;
+
+        }
+        .skill-group {
+            margin-bottom: 13px;
+        }
+        .skill-group h4 {
+            font-size: 9px;
+            color: var(--primary);
+            text-transform: uppercase;
+            margin-bottom: 7px;
+            letter-spacing: 0.5px;
+        }
+        .skills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .skills span {
+            font-size: 8.5px;
+            padding: 5px 7px;
+            border: 1px solid #d9e2e9;
+            border-radius: 4px;
+            background: white;
+            color: #4f5b66;
+        }
+        .profile-link {
+            margin-bottom: 10px;
+        }
+        .profile-link strong {
+            display: block;
+            font-size: 9px;
+            color: #26333e;
+        }
+        .profile-link span {
+            font-size: 8.5px;
+            color: var(--primary);
+            word-break: break-word;
+        }
+        .language {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 9px;
+            font-size: 9px;
+            
+        }
+        .language span:last-child{
+            color: var(--muted);
+        }
+        .cert {
+            padding: 9px 0;
+            border-bottom: 1px solid #e1e7ec;
+        }
+        .cert:last-child {border-bottom: 0;}
+        .cert strong{display: block; font-size: 9.5px;}
+        .cert span {
+            display: block;
+            margin-top: 3px;
+            font-size: 8.5px;
+            color: var(--muted);
+        }
+    </style>
+</head>
+<body>
+    <div class="resume">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="name">Ritabrata
+                    <div class="role">Statistical Data Analysis</div>
+                    <div class="contact">
+                        <span><i class="bx bx-map-alt"></i>Kolkata, India</span>
+                        <span><i class="bx bxs-phone">&nbsp;+91 983.639.1144</i></span>
+                        <span><i class="bx bxs-envelope">&nbsp;ritabrata.bhattacharya.ds@gmail.com</i></span>
+                        <span><i class="bx bxl-github">&nbsp;github.com/rivthebest</i></span>
+                        <span><i class="bx bxl-linkedin">&nbsp;linkedin.com/in/ritabrata-bhattacharya</i></span>
+                    </div>
+                </h1>
+            </div>
+        </header>
+        <div class="content">
+            <main class="main">
+                <section class="section">
+                    <h2 class="section-title">Professional Summary</h2>
+                    <p class="summary">
+                        WE THE PEOPLE OF INDIA, having solemnly resolved to constitute
+                        India into a SOVEREIGN SOCIALIST SECULAR DEMOCRATIC REPUBLIC and
+                        to secure to all its citizens: JUSTICE, social, economic and politial
+                        LIBERTY of thought, expression, belief, faith and worship
+                        EQUALITY of status and of opportunity; and to promote among them all
+                        FRATERNITY assuring the dignity of the individual and the integrity of the Nation;
+                        IN OUR CONSTITUENT ASShEMBLY this twenty-sixth day of November 1949,
+                        do HEREBY ADOPT, ENACT AND GIVE TO OURSELVES THIS CONSTITUTION.
+                    </p>
+                </section>
+                <section class="section">
+                    <h2 class="section-title">Professional Experiences</h2>
+                    <div class="experience">
+                        <div class="job">
+                            <div class="job-header">
+                                <div>
+                                    <div class="job-title">Senior Machine Learning Engineer</div>
+                                    <div class="company">Aligned Automation Services Pvt Ltd.</div>
+                                </div>
+                                <span class="date">November-2021 till June-2022</span>
+                            </div>
+                            <ul>
+                                <li>Developed</li>
+                                <li>Improved</li>
+                                <li>Designed</li>
+                                <li>Collaborated</li>
+                                <li>Assorted</li>
+                            </ul>
+                        </div>
+                        <div class="job">
+                            <div class="job-header">
+                                <div>
+                                    <div class="job-title">Senior Associate Projects</div>
+                                    <div class="company">Cognizant Technology Solution US Corp</div>
+                                </div>
+                                <span class="date">September-2014 till January-2017</span>
+                            </div>
+                            <ul>
+                                <li>Developed</li>
+                                <li>Improved</li>
+                                <li>Designed</li>
+                                <li>Collaborated</li>
+                                <li>Assorted</li>
+                            </ul>
+                        </div>
+                        <div class="job">
+                            <div class="job-header">
+                                <div>
+                                    <div class="job-title">Senior Associate Projects</div>
+                                    <div class="company">Cognizant Technology Solution Asia Pacific Pvt Ltd.</div>
+                                </div>
+                                <span class="date">June-2013 till September-2014</span>
+                            </div>
+                            <ul>
+                                <li>Developed</li>
+                                <li>Improved</li>
+                                <li>Deisgned</li>
+                                <li>Collaborated</li>
+                                <li>Assorted</li>
+                            </ul>
+                        </div>
+                    </div>
+                </section>
+                <section class="section">
+                    <h2 class="section-tiitle">Projects</h2>
+                    <div class="projects">
+                        <div class="project">
+                            <div class="project-top">
+                                <h4>Payment Domain</h4>
+                                <span class="project-type">Big Data Backend</span>
+                                <span class="project-type">Application Backend</span>
+                            </div>
+                            <p>Validated Big Data Application Backend for Merchant and End User Segment</p>
+                            <div class="tech">
+                                <span>Big Data</span>
+                                <span>Hadoop</span>
+                                <span>Hive</span>
+                                <span>Shell Script</span>
+                                <span>SQL Script</span>
+                                <span>Java Script</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="section">
+                    <h2 class="section-title">Education</h2>
+                    <div class="education-item">
+                        <div class="degree">Master of Computer Applications</div>
+                        <div class="school">West Bengal University of Technology</div>
+                        <div class="edu-date">September 2001 till July 2004</div>
+                    </div>
+                    <div class="education-item">
+                        <div class="degree">Bachelor of Science - Honours in Mathematics</div>
+                        <div class="school">University of Calcutta</div>
+                        <div class="edu-date">September 1996 till July 2000</div>
+                    </div>
+                </section>
+            </main>
+            <aside class="sidebar">
+                <section class="sidebar-section">
+                    <h3 class="sidebar-title">Technical Skills</h3>
+                    <div class="skill-group">
+                        <h4>Big Data</h4>
+                        <div class="skills">
+                            <span>Hadoop</span>
+                            <span>Hive</span>
+                            <span>PySpark</span>
+                            <span>Shell Script</span>
+                            <span>SQL</span>
+                        </div>
+                        &nbsp;
+                        <h4>Payment Domain</h4>                          
+                        <div class="skills">
+                            <span>Virtual Wallet</span>
+                            <span>Card Enrollemnt</span>
+                            <span>Clearing & Settlement</span>
+                        </div>
+                        &nbsp;
+                        <h4>Stock market</h4>
+                        <div class="skills">
+                            <span>Market Data Equity based OPTION Trading Data Analysis</span>
+                        </div>
+                        
+                    </div>
+                </section>
+                <section class="sidebar-section">
+                    <h3 class="sidebar-title">Online Profiles</h3>
+                    <div class="profile-link">
+                        <strong>Github</strong>
+                        <span>github.com/rivthebest</span>
+                    </div>
+                    <div class="profile-link">
+                        <strong>LinkedIn</strong>
+                        <span>linked.com/in/ritabrata-bhattacharya</span>
+                    </div>
+                </section>
+                <section class="sidebar-section">
+                    <h3 class="sidebar-title">Certifications</h3>
+                    <div class="cert">
+                        <strong>Technology A</strong>
+                        <span>Online Certification</span>
+                    </div>
+                    <div class="cert">
+                        <strong>Technology B</strong>
+                        <span>Online Certification</span>
+                    </div>
+                    <div class="cert">
+                        <strong>Technology C</strong>
+                        <span>Online Certification</span>
+                    </div>
+                </section>
+                <section class="sidebar-section">
+                    <h3 class="sidebar-title">Languages</h3>
+                    <div class="language">
+                        <span><strong>English:</strong></span>
+                        <span>Native or Bi-Lingual Proficiency</span>
+                    </div>
+                    <div class="language">
+                        <span><strong>Bengali:</strong></span>
+                        <span>Native or Bi-Lingual Proficiency</span>
+                    </div>
+                    <div class="language">
+                        <span><strong>Hindi/Urdu:</strong></span>
+                        <span>Advanced Proficiency</span>
+                    </div>
+                </section>
+                <section class="sidebar-section">
+                    <h3 class="sidebar-title">Interests</h3>
+                    <div class="skills">
+                        <span>Quantum Computing</span>
+                        <span>Advanced Stochastic Concept</span>
+                    </div>
+                </section>
+            </aside>
+
+        </div>
+    </div>
+</body>
+</html>
