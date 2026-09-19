@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Grid - Full-Height Page Layout</title>
+    <style>
+        body {
+            font-family: system-ui, sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: #161616;
+            background-color: #f3f3f3;
+
+            min-block-size: 100vh;
+            min-block-size: 100dvh;
+            display: grid;
+            /*grid-template-columns: 100px 150px 200px 200px;*/
+            /*grid-template-columns: 100px auto 10rem 200px;*/
+            /*grid-template-columns: 100px auto repeat(2, 200px);*/
+            /*grid-template-columns: repeat(2, 100px, 200px);*/
+            grid-template-columns: 5rem 1fr;
+            /*grid-template-rows: 100px 200px 100px;*/
+            grid-template-rows: auto 1fr auto;
+
+            grid-template-areas: 
+                'header header'
+                'sidebar main'
+                'footer footer';
+            grid-template-areas: 
+                'sidebar header'
+                'sidebar main'
+                'footer footer';
+            transition: grid-template-columns 0.3s ease;
+        }
+
+        body.sb-expand {
+            grid-template-columns: 12.5rem 1fr;
+        }
+        .dashboard-header {
+            grid-area: header;
+            background-color: #fff;
+            padding: 1.25rem;
+        }
+        .dashboard-footer {
+            grid-area: footer;
+            background-color: #fff;
+            padding: 1.25rem;
+        }
+        .dashboard-main {
+            grid-area: main;
+            padding: 1.25rem;
+        }
+        .dashboard-sidebar {
+            position: relative;
+            grid-area: sidebar;
+            color: #fff;
+            background-color: #1d1d29;
+        }
+
+        .dashboard-sidebar button {
+            position: absolute;
+            inset: 4.5rem -0.75rem auto auto;
+            width: 1.5rem;
+            aspect-ratio: 1;
+            background-color: #fff;
+            border: transparent;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .logo {
+            display: flex;
+            justify-content: center;
+            font-size: 3rem;
+            line-height: 1.3;
+        }
+    </style>
+</head>
+<body>
+    <header class="dashboard-header">
+        <h1>CSS Grid - Full Height Page Layout</h1>
+    </header>
+    <aside class="dashboard-sidebar">
+        <div class="logo">&#9812;</div>
+        <button type="button" id="resize">&#9776;</button>
+    </aside>
+    <main class="dashboard-main">
+        Main
+    </main>
+    <footer class="dashboard-footer">
+        Footer
+    </footer>
+    <script>
+        const resizeBtn = document.getElementById('resize');
+        resizeBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.body.classList.toggle('sb-expand');
+        })
+    </script>
+</body>
+</html>
