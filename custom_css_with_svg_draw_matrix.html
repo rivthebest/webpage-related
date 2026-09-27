@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Matrix Transformation Demo</title>
+    <style>
+        :root {
+            /* Pre calculated trig values for 45 degree rotation */
+            --cos45: 0.707;
+            --sin45: 0.707;
+            --neg-sin45: -0.707;
+
+            /* Shear factor k*/
+            --shear-k: 0.5;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0f172a;
+            margin: 0;
+        }
+
+        /* The target mathematical object to transform */
+        .vector-grid {
+            width: 100%;
+            height: 100%;
+            transform-origin: center;  /* Linear transformation happens around the origin */
+            animation: matrix-sequence 8s infinite ease-in-out;
+        }
+        @keyframes matrix-sequence {
+            /* 0% to 20% Identity matrix (Original State) */
+            0%, 20% {
+                transform: matrix(1,0,0,1,0,0);
+            }
+            /* 40% to 60% Rotation Matrix (45 degree) */
+            40%, 60% {
+                transform: matrix(var(--cos45), var(--sin45), var(--neg-sin45), var(--cos45), 0, 0);
+            }
+            /* 80% to 100% Shear matrix along X-Axis */
+            80%, 100% {
+                transform: matrix(1,0,var(--shear-k),1,0,0);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="diagram-container">
+        <svg class="vector-grid" viewBox="-50 -50 100 100" xmlns="http://www.w3.org/2000/svg">
+            <!-- Grid Lines-->
+            <line x1="-50" x2="50" y1="-25" y2="-25" stroke="#334155" stroke-width="0.5" />
+            <line x1="-50" x2="50" y1="0" y2="-25" stroke="#64748b" stroke-width="1" />
+            <line x1="-50" x2="50" y1="25" y2="-25" stroke="#334155" stroke-width="0.5" />
+        
+            <line x1="-25" x2="-25" y1="-50" y2="-25" stroke="#334155" stroke-width="0.5" />
+            <line x1="0" x2="0" y1="-50" y2="-25" stroke="#64748b" stroke-width="1" />
+            <line x1="25" x2="25" y1="-50" y2="-25" stroke="#334155" stroke-width="0.5" />
+        
+            <rect x="0" y="-25" width="25" height="25" fill="#38bdf8" fill-opacity="0.3" stroke="#0ea5e9" stroke-width="1.5" />
+        
+            <line x1="0" x2="25" y1="0" y2="0" stroke="#f43f5e" stroke-width="2" marker-end="url(#arrow)" />
+            <line x1="0" x2="0" y1="0" y2="-25" stroke="#10b981" stroke-width="2" marker-end="url(#arrow)" />
+        </svg>
+    </div>
+</body>
+</html>
