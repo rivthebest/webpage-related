@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Postage Stamp Cutout Effect</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    img {
+        max-inline-size: 100%;
+    }
+    body {
+        font-family: system-ui, sans-serif;
+        font-size: 1rem;
+        line-height: 1.7;
+        color: #2b3d4e;
+        background-color: #d4e4f4;
+       /* background-color: indianred; */ 
+        padding: 3rem;
+    }
+    h1 {
+        font-size: 1.75rem;
+        line-height: 1.5;
+        font-weight: 600;
+        text-align: center;
+        margin-block-end: 2rem;
+    }
+
+    .postage-stamps {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+        justify-content: center;
+    }
+    .postage-stamp {
+        position: relative;
+        inline-size: 100%;
+        aspect-ratio: 1.4;
+        padding: 1.5rem;
+       /* background-color: #fff;
+       background: 
+        radial-gradient(circle 6px, #0000 98%, #fff),
+        linear-gradient(#fff 0 0);
+       background-position: -9px -9px center;
+       background-size: 18px 18px, calc(100% - 18px) calc(100% - 18px);
+       background-repeat: round, no-repeat;
+       */
+       --radius: 6px;
+       background: 
+            radial-gradient(
+                circle var(--radius), 
+                #0000 98%, 
+                #fff
+            ) 
+            calc(var(--radius) * -1.5)
+            calc(var(--radius) * -1.5) / 
+            calc(var(--radius) * 3) 
+            calc(var(--radius) * 3) 
+            round,
+            linear-gradient(
+                #fff 0 0) 
+                center / 
+                calc(100% - calc(var(--radius) * 3)) 
+                calc(100% - calc(var(--radius) * 3)) 
+                no-repeat;
+    }
+
+    /*
+    .postage-stamp::after {
+        position: absolute;
+        content: '';
+        inset: 9px;
+        z-index: -1;
+        background-color: #fff;
+    }
+    */
+    .postage-stamp img {
+        inline-size: 100%;
+        aspect-ratio: 1.4;
+        object-fit: cover;
+        display: block;
+        outline: 1px dashed #fff;
+        outline-offset: -1rem;
+    }
+</style>
+<body>
+    <h1>CSS Postage Stamp Cutout Effect</h1>
+    <section class="postage-stamps">
+        <div class="postage-stamp">
+            <img src="https://images.unsplash.com/photo-1454372182658-c712e4c5a1db" alt="">
+        </div>
+        <div class="postage-stamp">
+            <img src="https://images.unsplash.com/photo-1468465226960-8899e992537c" alt="">
+        </div>
+        <div class="postage-stamp">
+            <img src="https://images.unsplash.com/photo-1474874055390-459bc92357f3" alt="">
+        </div>
+        <div class="postage-stamp">
+            <img src="https://images.unsplash.com/photo-1500964757637-c85e8a162699" alt="">
+        </div>        
+        <div class="postage-stamp">
+            <img src="https://images.unsplash.com/photo-1614720216135-c83575f58165" alt="">
+        </div>
+        <div class="postage-stamp">
+            <img src="https://images.unsplash.com/photo-1454372182658-c712e4c5a1db" alt="">
+        </div>
+    </section>
+</body>
+</html>
